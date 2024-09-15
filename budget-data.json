@@ -1,0 +1,33 @@
+{
+    "myBudget": [
+    {
+    "title" : "Eat out",
+    "budget" : "30"
+    },
+    {"title" : "Rent",
+    "budget" : "350"},
+    {"title" : "Groceries",
+    "budget" : "90"},
+    {
+        "title" : "Spectrum Wifi",
+        "budget" : "10"
+    },
+    {
+        "title" : "Duke Energy",
+        "budget" : "60"
+    },
+    {
+        "title" : "Clothing",
+        "budget": "200"
+    },
+    {
+        "title" : "self-care",
+        "budget" : "75"
+    },
+    {
+        "title": "movies",
+        "budget": "20"
+    } 
+  ]
+    
+  }
