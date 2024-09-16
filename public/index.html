@@ -88,6 +88,12 @@
                 </p>
             </article>
 
+            <article aria-labelledby="d3jsChart">
+                <h1 id="d3jsChartTitle">D3.js Chart</h1>
+                <div id="d3jsChart"></div> <!-- This is where the D3.js chart will be rendered -->
+            </article>
+            
+
         </div>
 
     </main> 
@@ -117,7 +123,8 @@
                     'rgba(75, 192, 192, 0.6)',  
                     'rgba(153, 102, 255, 0.6)', 
                     'rgba(255, 159, 64, 0.6)',  
-                    'rgba(99, 255, 132, 0.6)'   
+                    'rgba(99, 255, 132, 0.6)',
+                    'rgba(54, 255, 192, 0.6)'   
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
@@ -126,9 +133,10 @@
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)',
                     'rgba(255, 159, 64, 1)',
-                    'rgba(99, 255, 132, 1)'
+                    'rgba(99, 255, 132, 1)',
+                    'rgba(99, 159, 86, 1)'
                 ],
-                borderWidth: 1
+                borderWidth: 3
                 }
             ],
             myBudget: []
@@ -245,6 +253,7 @@
                 createChart();
                 D3jsChart();
             })
+            
         }
 
         getBudget();
