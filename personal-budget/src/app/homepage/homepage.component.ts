@@ -13,7 +13,7 @@ import { DataService, IBudget } from '../data.service';
 })
 export class HomepageComponent implements OnInit, AfterViewInit {
 
-  backgroundColor: String[] = [
+  backgroundColor: string[] = [
     '#ffcd56',
     '#ff6384',
     '#36a2eb',
@@ -28,6 +28,8 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // Subscribe to budget data and then create charts
     this.dataService.getData().subscribe((budgetData: IBudget[]) => {
+      console.log(budgetData);
+      console.log(Array.isArray(budgetData));
       this.createChart(budgetData);
       this.createDonutChart(budgetData);
     });
@@ -48,94 +50,73 @@ export class HomepageComponent implements OnInit, AfterViewInit {
     };
 
     // Map budget data to Chart.js dataset
-    dataSource['datasets'][0].data = budget?.map(obj => obj.value);
-    dataSource['datasets'][0].backgroundColor = this.backgroundColor;
-    dataSource['labels'] = budget?.map(obj => obj.title);
+    dataSource.datasets[0].data = budget.map(obj => Number(obj.budget)); // Convert to number
+    dataSource.datasets[0].backgroundColor = this.backgroundColor;
+    dataSource.labels = budget.map(obj => obj.title);
 
-    var ctx = <HTMLCanvasElement>document?.getElementById('myChart');
+    const ctx = <HTMLCanvasElement>document.getElementById('myChart');
     if (ctx) {
-      var myPieChart = new Chart(ctx, {
+      const myPieChart = new Chart(ctx, {
         type: 'pie',
         data: dataSource,
       });
     }
   }
 
-  // Creating a donut chart using D3.js
-  createDonutChart(myDonutData: IBudget[]) {
-    var width = 400;
-    var height = 400;
-    var margin = 40;
-    var radius = Math.min(width, height) / 2 - margin;
-    var donutWidth = 75;
-    var color = d3.scaleOrdinal().range(this.backgroundColor);
+  // Add this method to your HomepageComponent
+createDonutChart(budget: IBudget[]) {
+  // Set dimensions for the SVG canvas
+  const width = 400;
+  const height = 400;
+  const margin = 40;
 
-    var svg: any = d3.select('#myDonutChart')
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .append('g')
-      .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
+  // Create an SVG element
+  const svg = d3.select('#myDonutChart')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .append('g')
+    .attr('transform', `translate(${width / 2}, ${height / 2})`);
 
-    var arc: Arc<any, d3Shape.DefaultArcObject> = d3.arc()
-      .outerRadius(radius)
-      .innerRadius(radius - donutWidth)
-      .cornerRadius(3)
-      .padAngle(0.015);
+  // Define the radius for the donut chart
+  const radius = Math.min(width, height) / 2 - margin;
 
-    var outerArc = d3.arc()
-      .innerRadius(radius * 0.9)
-      .outerRadius(radius * 0.9);
+  // Define a color scale
+  const color = d3.scaleOrdinal(this.backgroundColor);
 
-    // Pie layout for IBudget data
-    var pie = d3.pie<IBudget>()
-      .value((d: IBudget) => d.value) // Extract 'value' from IBudget
-      .sort(null);
+  // Create the pie generator
+  const pie = d3.pie<IBudget>()
+    .value(d => Number(d.budget)) // Use the budget as value
+    .sort(null);
 
-    var data_points = pie(myDonutData);
+  // Create the arc generator
+  const arc = d3.arc<d3.PieArcDatum<IBudget>>()
+    .innerRadius(radius * 0.5) // Inner radius for the donut
+    .outerRadius(radius); // Outer radius for the donut
 
-    // Creating the arcs for the donut chart
-    var path = svg.selectAll('path')
-      .data(data_points)
-      .enter()
-      .append('path')
-      .attr('d', arc)
-      .attr('fill', (d: any, i: any) => color(d.data.title))
-      .attr('stroke', 'white')
-      .style('stroke-width', '2px');
+  // Generate pie data
+  const pieData = pie(budget);
 
-    // Adding polylines to link arcs with labels
-    svg.selectAll('allPolylines')
-      .data(data_points)
-      .enter()
-      .append('polyline')
-      .attr('stroke', 'black')
-      .style('fill', 'none')
-      .attr('stroke-width', 1)
-      .attr('points', (d: any) => {
-        var posA = arc.centroid(d);
-        var posB = outerArc.centroid(d);
-        var posC = outerArc.centroid(d);
-        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-        posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1);
-        return [posA, posB, posC];
-      });
+  // Create the donut chart slices
+  svg.selectAll('slice')
+    .data(pieData)
+    .enter()
+    .append('path')
+    .attr('d', arc)
+    .attr('fill', (d, i) => color(i.toString())) // Set color based on index
+    .attr('stroke', '#fff') // Stroke for better visibility
+    .style('stroke-width', '2px');
 
-    // Adding labels
-    svg.selectAll('allLabels')
-      .data(data_points)
-      .enter()
-      .append('text')
-      .text((d: any) => d.data.title)
-      .attr('transform', (d: any) => {
-        var pos = outerArc.centroid(d);
-        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-        pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
-        return 'translate(' + pos + ')';
-      })
-      .style('text-anchor', (d: any) => {
-        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-        return (midangle < Math.PI ? 'start' : 'end');
-      });
-  }
+  // Optional: Add labels to the donut chart
+  svg.selectAll('text')
+    .data(pieData)
+    .enter()
+    .append('text')
+    .transition() // Transition for smooth appearance
+    .attr('transform', d => `translate(${arc.centroid(d)})`) // Position the label
+    .attr('dy', '0.35em') // Vertical alignment
+    .text(d => `${d.data.title}: ${d.data.budget}`); // Label content
 }
+
+
+ }
