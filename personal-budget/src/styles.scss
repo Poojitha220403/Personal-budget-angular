@@ -1,4 +1,4 @@
-/*! normalize.css v8.0.1 | MIT License | github.com/Nicolas/normalize.css */
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
    ========================================================================== */
@@ -196,7 +196,7 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-  appearance: button;
+  -webkit-appearance: button;
 }
 
 /**
@@ -288,7 +288,7 @@ textarea {
  */
 
 [type="search"] {
-  appearance: textfield; /* 1 */
+  -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
 }
 
@@ -348,15 +348,6 @@ template {
   display: none;
 }
 
-
-
-
-
-
-
-
-
-
 * {
   box-sizing: border-box;
 }
@@ -366,63 +357,34 @@ body {
   font-family: Tahoma, Arial;
 }
 
-div.menu {
-  width: 100%;
-  background-color: #4d5791;
-  height: 44px;
-  padding: 0 40px;
-}
-
-div.menu ul,
-div.menu ul li {
-  margin: 0;
-  padding: 0 ;
-  list-style: none;
-  display: inline-block;
-}
-
-div.menu ul li a {
-  display: block;
-  padding: 0 20px;
-  line-height: 44px;
-  font-size: 1.4em;
-  text-decoration: none;
-  color: #fff;
-  margin: 0;
-}
-
-div.menu ul li a:hover  {
-  background-color: white;
-  color: #4d5791;
-}
-
-div.hero {
+.hero {
   height: 350px;
   background-color: #b4c6f0;
-  background-image: url('/assets/bg.png');
+  background-image: url('./assets/bg.png');
   background-size: 400px;
   background-repeat: no-repeat;
   background-position: center bottom;
   padding-top: 40px;
 }
 
-div.hero h1,
-div.hero h2 {
+.hero h1,
+.hero h2 {
   text-align: center;
   margin: 0;
 }
 
-div.hero h1 {
+.hero h1 {
   color: #fff;
   font-size: 4.2em;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
-div.hero h2 {
+.hero h2 {
   color: #4d5791;
 }
 
-.container {
+main {
   padding: 40px;
   width: 100%;
 }
@@ -432,26 +394,39 @@ div.hero h2 {
   display: inline-block;
 }
 
-.bottom {
+footer {
   height: 50px;
   background-color: #b4c6f0;
   padding: 40px;
+}
+
+.skip {
+  display: block;
+  line-height: 44px;
+  padding: 0 20px;
+  margin-top: -44px;
+}
+
+.skip:focus {
+  margin-top: 0;
 }
 
 .center {
   text-align: center;
 }
 
-.container div.text-box {
+main article {
   display: inline-block;
   width: 100%;
   max-width: 340px;
   text-align: justify;
   margin: 20px;
 }
-
+#chartContainer{
+  display: flex;
+}
 @media screen and (min-width: 768px) {
-  .container .div.text-box {
+  main article {
       margin: 10px;
   }
 }

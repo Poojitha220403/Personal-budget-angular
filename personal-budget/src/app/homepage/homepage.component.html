@@ -1,48 +1,61 @@
-<main class="center" id="main-content">
+<main class="center" id="main">
+  <pb-breadcrumbs></pb-breadcrumbs>
 
-      <div class="page-area">
+  <!--This is a Semantic HTML Change-->
+  <section class="page-area">
 
-       <!-- This is an A11y Change -->
-          <pb-article aria-labelledby="stay-on-track">
-              <h1 id="stay-on-track">Stay on tracksuits</h1>
-              <div>
-                  Do you know where you are spending your money? If you really stop to track it down,
-                  you would get surprised! Proper budget management depends on real data... and this
-                  app will help you with that!
-              </div>
-          </pb-article>
+    <pb-article ngSkipHydration>
+      <h1>Stay on track</h1>
+      <p>
+        Do you know where you are spending your money? If you really stop to
+        track it down, you would get surprised! Proper budget management
+        depends on real data... and this app will help you with that!
+      </p>
+    </pb-article>
 
-          <!-- This is an A11y Change -->
-          <pb-article aria-labelledby="alerts">
-              <h1 id="alerts">Alerts</h1>
-              <div>
-                  What if your clothing budget ended? You will get an alert. The goal is to never go over the budget.
-              </div>
-          </pb-article>
+    <pb-article ngSkipHydration>
+      <h1>Alerts</h1>
+      <!--This is an SEO Change-->
+      <meta name="description" content="Alerts on Budget" />
+      <p>
+        What if your clothing budget ended? You will get an alert. The goal
+        is to never go over the budget.
+      </p>
+    </pb-article>
 
+    <pb-article ngSkipHydration>
+      <h1>Results</h1>
+      <p>
+        People who stick to a financial plan, budgeting every expense, get
+        out of debt faster! Also, they to live happier lives... since they
+        expend without guilt or fear... because they know it is all good and
+        accounted for.
+      </p>
+    </pb-article>
 
-          <pb-article aria-labelledby="results">
-              <h1 id="results">Results</h1>
-              <div>
-                  People who stick to a financial plan, budgeting every expense, get out of debt faster!
-                  Also, they to live happier lives... since they expend without guilt or fear...
-                  because they know it is all good and accounted for.
-              </div>
-          </pb-article>
+    <pb-article ngSkipHydration>
+      <h1>Free</h1>
+      <!--This is an SEO Change-->
+      <meta name="description" content="Free App for everyone" />
+      <p>This app is free!!! And you are the only one holding your data!</p>
+    </pb-article>
+    <div id="chartContainer">
 
-          <article aria-labelledby="chart">
-              <h1 id="chart">Chart</h1>
-              <div>
-                  <canvas id="myChart" width="400" height="400"></canvas>
-              </div>
-          </article>
+    <pb-article ngSkipHydration>
+        <h1>Chart</h1>
+        <p>
+          <canvas id="myChart" width="280" height="400"> </canvas>
+        </p>
+      </pb-article>
 
-          <article aria-labelledby="d3jsChart">
-              <h1 id="d3jsChartTitle">D3.js Chart</h1>
-              <div id="d3jsChart"></div> <!-- This is where the D3.js chart will be rendered -->
-          </article>
+      <pb-article ngSkipHydration>
 
+        <h1> D3JS Chart</h1>
 
-      </div>
+        <div id="myDonutChart"></div>
 
-  </main>
+    </pb-article>
+    </div>
+
+  </section>
+</main>
